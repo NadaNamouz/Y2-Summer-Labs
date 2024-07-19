@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
+</head>
+<body>
+    <center>
+    	<br><br><br><br><br><br><br><br><br><br><br><br>
+        <h3>Name: {{ session['name'] }}</h3>
+        <h3>Birth Month: {{ session['BirthMonth'] }}</h3>
+        <a href="{{ url_for('fortune') }}"><button>Tell me my fortune!</button></a>
+    </center>
+</body>
+</html>
