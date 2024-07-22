@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>SignIn</title>
+</head>
+<body>
+	<h2>Sign in!</h2>
+    <form method="POST" action="/signin">
+        <input type="email" name="mail" placeholder="Email"><br>
+        <input type="password" name="pass" placeholder="Password"><br>
+        <input type="submit" value="Sign In">
+    </form>
+    <center><p>Dont have an account?</p></center>
+    <a href="/"><button>Sign Up</button></a>
+</body>
+</html>
