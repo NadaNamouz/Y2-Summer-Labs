@@ -7,11 +7,14 @@
     <title>Display</title>
 </head>
 <body>
-	<ul>
-    	{% for quote in quotes %}
-        <li>quote: {{ quote }}</li>
-    	{% endfor %}
-	</ul>
-	<a href="/home"><button>Home</button></a>
+    <h1>Welcome {{ user['fullName'] }}</h1>
+    <h2>Quotes</h2>
+    <ul>
+        {% for quote in user.quotes %}
+            <li>"{{ quote['text'] }}" - {{ quote['said_by'] }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('signout') }}"><button>Logout</button></a>
+    <a href="{{ url_for('home') }}"><button>home</button></a>
 </body>
 </html>
