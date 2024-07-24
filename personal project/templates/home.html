@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Home</title>
+</head>
+<body>
+    <header>
+    	<div>
+        	<h1>Your Stories!</h1>
+    	</div>
+        <div>
+            <label for="category-filter">Filter by category:</label>
+            <select id="category-filter" onchange="filterStories()">
+                <option value="all">All</option>
+                <option value="fiction">Fiction</option>
+            	<option value="romance">Romance</option>
+            	<option value="horror">Horror</option>
+            	<option value="drama">Drama</option>
+            	<option value="mystery">Mystery</option>
+            	<option value="scifi">SciFi</option>
+            	<option value="other">Other</option>
+            </select>
+        </div>
+    </header>
+    <br><br><br><br><br><br>
+    <div class="stories-container" id="stories-container">
+        <div class="story-box create-story-box" onclick="window.location.href='/create'">
+            <div class="plus-icon">+</div>
+            <p>Create Story</p>
+        </div>
+        {% for story_id, story in stories.items() %}
+        <div class="story-box" data-category="{{ story.category }}" onclick="showStoryModal('{{ story_id }}')">
+            <h2>{{ story.title }}</h2>
+            <p>by {{ story.author }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="story-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeStoryModal()">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-author"></p>
+            <p id="modal-story"></p>
+        </div>
+    </div>
+
+    <a href="/signout"><button>Sign out</button></a>
+
+    <script>
+        function filterStories() {
+            var filter = document.getElementById('category-filter').value;
+            var stories = document.getElementsByClassName('story-box');
+            for (var i = 0; i < stories.length; i++) {
+                if (filter === 'all' || stories[i].getAttribute('data-category') === filter) {
+                    stories[i].style.display = 'block';
+                } else {
+                    stories[i].style.display = 'none';
+                }
+            }
+        }
+
+        function showStoryModal(storyId) {
+            const stories = {{ stories_json|safe }};
+            const story = stories[storyId];
+            document.getElementById('modal-title').innerText = story.title;
+            document.getElementById('modal-author').innerText = "by " + story.author;
+            document.getElementById('modal-story').innerText = story.story;
+            document.getElementById('story-modal').style.display = 'block';
+        }
+
+        function closeStoryModal() {
+            document.getElementById('story-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<br><br><br><br><br><br><br><br>
+    <form method="POST" action="/home">
+        <input type="text" name="author" placeholder="Your Name">
+        <input type="text" name="title" placeholder="Story Title">
+        <textarea name="story" placeholder="Write your story!"></textarea>
+        <select name="category">
+            <option value="fiction">Fiction</option>
+            <option value="romance">Romance</option>
+            <option value="horror">Horror</option>
+            <option value="drama">Drama</option>
+            <option value="mystery">Mystery</option>
+            <option value="scifi">SciFi</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+    <center><a href="/home"><button>Home</button></a><br></center>
+</body>
+
+</html>
