@@ -4,48 +4,44 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <title>Home</title>
+    <title>Profile</title>
 </head>
 <body>
-
-	<!-- sidebar -->
-	<div class="hamburger" onclick="toggleSidebar()">
+    <!-- sidebar -->
+    <div class="hamburger" onclick="toggleSidebar()">
     <div class="bar"></div>
     <div class="bar"></div>
     <div class="bar"></div>
   </div>
 
   <div id="sidebar" class="sidebar">
-  	<br>
+    <br>
     <a href="/home">Home</a>
     <a href="/profile">Profile</a>
     <a href="/signout">sign out</a>
   </div>
 
   <script>
-  	function toggleSidebar() {
+    function toggleSidebar() {
   document.getElementById("sidebar").classList.toggle("active");
   document.body.classList.toggle("active");
 }
   </script>
-	<!-- sidebar -->
-
-
-
+    <!-- sidebar -->
     <div>
-        <h2>Browse Stories!</h2>
+        <h2>Your Stories!</h2>
     </div>
     <div>
         <label for="category-filter">Filter by category:</label>
         <select id="category-filter" onchange="filterStories()">
-			<option value="all">All</option>
-			<option value="fiction">Fiction</option>
-			<option value="romance">Romance</option>
-			<option value="horror">Horror</option>
-			<option value="drama">Drama</option>
-			<option value="mystery">Mystery</option>
-			<option value="scifi">SciFi</option>
-			<option value="other">Other</option>
+            <option value="all">All</option>
+            <option value="fiction">Fiction</option>
+            <option value="romance">Romance</option>
+            <option value="horror">Horror</option>
+            <option value="drama">Drama</option>
+            <option value="mystery">Mystery</option>
+            <option value="scifi">SciFi</option>
+            <option value="other">Other</option>
         </select>
     </div>
 
@@ -68,11 +64,17 @@
             <h2 id="modal-title"></h2>
             <p id="modal-author"></p>
             <p id="modal-story"></p>
+            <button onclick="deleteStory()">Delete</button>
         </div>
     </div>
     <br>
+    <div>
+        <a href="/profile"><button>Back</button></a>
+    </div>
 
     <script>
+        let currentStoryId = null;
+
         function filterStories() {
             var filter = document.getElementById('category-filter').value;
             var stories = document.getElementsByClassName('story-box');
@@ -86,16 +88,35 @@
         }
 
         function showStoryModal(storyId) {
-    		const stories = {{ stories_json|safe }};
-    		const story = stories[storyId];
-    		document.getElementById('modal-title').innerText = story.title;
-    		document.getElementById('modal-author').innerText = "by " + story.author;
-    		document.getElementById('modal-story').innerText = story.story;
-    		document.getElementById('story-modal').style.display = 'block';
-		}
+            const stories = {{ stories_json|safe }};
+            const story = stories[storyId];
+            document.getElementById('modal-title').innerText = story.title;
+            document.getElementById('modal-author').innerText = "by " + story.author;
+            document.getElementById('modal-story').innerText = story.story;
+            document.getElementById('story-modal').style.display = 'block';
+            currentStoryId = storyId; // Store the current story ID for deletion
+        }
 
         function closeStoryModal() {
             document.getElementById('story-modal').style.display = 'none';
+            currentStoryId = null;
+        }
+
+        function deleteStory() {
+            if (currentStoryId) {
+                fetch(`/delete/${currentStoryId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                            window.location.reload();
+                    } else {
+                        alert('Failed to delete story');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
         }
     </script>
 </body>

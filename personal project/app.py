@@ -29,7 +29,9 @@ def signup():
         password = request.form['pass']
         name = request.form['name']
         username = request.form['username']
+        stories = 0
         info = {"email": email, "password": password, "username": username, "name": name}
+
         try:
             user = auth.create_user_with_email_and_password(email, password)
             session['user'] = user
@@ -62,7 +64,6 @@ def signout():
     print("signed out user")
     return redirect(url_for('login'))
 
-
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -80,14 +81,18 @@ def home():
             return render_template('home.html')
     
     try:
-        user = session['user']
-        uid = user['localId']
-        stories = db.child("stories").child(uid).get().val()
+        all_stories = db.child("stories").get().val()
+        if all_stories:
+            # Flatten the nested dictionary structure
+            stories = {story_id: story for user_stories in all_stories.values() for story_id, story in user_stories.items()}
+        else:
+            stories = {}
+
         stories_json = jsonify(stories).get_data(as_text=True)
         return render_template('home.html', stories=stories, stories_json=stories_json)
     except:
         return render_template('home.html', stories={}, stories_json='{}')
-    return render_template('home.html')
+
 
 @app.route('/get_stories', methods=['GET'])
 def get_stories():
@@ -101,11 +106,62 @@ def get_stories():
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
+    user = session['user']
+    uid = user['localId']
     return render_template('create.html')
 
-@app.route('/index', methods=['GET', 'POST'])
-def index():
-    return render_template('index.html')
+@app.route('/stories', methods=['GET', 'POST'])
+def stories():
+    user = session['user']
+    uid = user['localId']
+    stories = db.child("stories").child(uid).get().val()
+    stories_json = jsonify(stories).get_data(as_text=True)
+    info = db.child("users").child(uid).get().val()
+    return render_template('stories.html',info = info,stories=stories, stories_json=stories_json)
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    user = session['user']
+    uid = user['localId']
+    name = db.child("users").child(uid).get().val()['name']
+    email = db.child("users").child(uid).get().val()['email']
+    return render_template('prof.html',name= name,email=email)
+
+@app.route('/edit', methods=['GET','POST'])
+def edit():
+    return render_template('edit.html')
+
+@app.route('/delete/<story_id>', methods=['DELETE'])
+def delete_story(story_id):
+    try:
+        user = session['user']
+        uid = user['localId']
+        stories = db.child("stories").child(uid).get().val()
+        if story_id in stories:
+            db.child("stories").child(uid).child(story_id).remove()
+            return jsonify({"success": True}), 200
+        else:
+            return jsonify({"success": False, "message": "Story not found"}), 404
+    except:
+        return render_template('error.html')
+    return render_template('profile.html')
+
+@app.route('/update' ,methods=['GET','POST'])
+def update():
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['password']
+        name = request.form['name']
+        username = request.form['username']
+        info = {"name":name, "email":email,"password":password,"username":username}
+        try:
+            user = session['user']
+            uid = user['localId']
+            db.child("users").child(uid).update(info)
+            return redirect(url_for('profile'))
+        except:
+            return render_template('error.html')
+    return render_template('error.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

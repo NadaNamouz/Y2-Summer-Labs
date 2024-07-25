@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pro.css') }}"> 
+  <title> Profile </title>
+
+</head>
+<body>
+    <!-- sidebar -->
+  <div class="hamburger" onclick="toggleSidebar()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <br>
+    <a href="/home">Home</a>
+    <a href="/profile">Profile</a>
+    <a href="/signout">sign out</a>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("active");
+  document.body.classList.toggle("active");
+}
+  </script>
+  <!-- sidebar -->
+
+  <section class="main">
+  <div class="profile-card">
+    <div class="image">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxARDg4ODQ0QDg0NEA4ODQ0NDQ8NDw0NFREWFhURExMYHSggGBolGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAOEA4QMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQUCAwQGB//EADQQAQACAAMGAwUIAgMAAAAAAAABAgMEEQUhMUFRcRIiYRWBkaGxMkJSYoKSwdEzchQjQ//EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD7YAAAAAAAAAAAAAAAAAAAAAAAAACJhHhZAMfCMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANWE49I43rHe0AzGv/k0/HT90M62ieExPaYBIlAAAAAAAAAAAAAAAAAAAAAANOazEUrrPHlHUGzExIrGtp0hWZnas8MOPfLizGYte2szu6cmkGzFx72+1aZ9+5r1ABNbzG+JmPWJQA7MDaV68Z8UevH4rXK5yt+G6ekvPEWmOG7TnAPUCv2fn/FpW87+U9ViCAAAAAAAAAAAAAAAAAAY4l4rE2nhDz+ax5vaZnhy7O7bGPwpHef6VYAAAAAAAAETz6L3Z2Z8ddJnzV+cKJtymN4LxblzjrAPSIInWNeoAAAAAAAAAAAAAAADHF3VtPpP0B57N4nixLT67uzUWneAAAAAAAAAAAv9nYniw6+m74OlXbFt5bR0mFkCAAAAAAAAAAAAAAGONHlt/rP0ZExxjqDy4zx66WtHSZYAAAAAAAAAISAttiR5b94+izcWycPTD7zr7nYAAAAAAAAAAAAAAAACm2vg6X8XK31cD0WbwPHSa8+MT6vPXrpMxPGAQAAAAAAAAyw6azFY5zoxWmyMt/6T+n+wWWFTw1ivSGSUAAAAAAAAAAAAAAAAAOHaOS8fmr9rp1dyQeXtGm6Y0mEL7N5Gt9/2bdVRmMpek743dY3g0AAAADKmHNp0rEz7lllNmcJxP2x/IOfI5KbzrO6sfNeVjTSI3RHIrGm6N0RySCAAAAAAAAAAAAAAAAAABLRjZuleNo16RvkG9GitxNrR92mveWm21r8q1j5gsMXI4duNdO25z22TTla3ycvtTE/L8D2pienwB0eyK/jn5N2HszDjrPeXD7VxPy/BHtTE9PgC5w8Otd1YiO25mpI2rienwbabXn71I90gtRyYW0cOeM+Hu662id8TrHoAJQAAAAAAAAAAAAACQQ1ZjMVpGtp7Q153ORhx1tyj+VHi4s2nW06yDpzW0LW3R5a+nGXGACEgAAAACEgDbgZi1J8s+5qAXeU2jW2kW8tvlLteXWWz9oaaUvw+7PQFsAAAAAAAAAAAA1ZnHilZtPu9ZbVFtLMeK8xE+Wu6O4ObFxJtabWnfLFCQAAAAAAAAAAAAAAW2y85r5LTv+7P8LN5el5iYmOMb4eiyuN46Rbrx7g2gAAAAAAAAA053F8OHaefCO7zq121fdSvWZmVUAAAAAAAAAAAAAAAAAs9jY2+1J574Vjdk7+HEpPrEfEHo0JQAAAAAAAACm2zP/ZEdKxPzcDv2x/l/TH1lwAAAAAAAAAAAAAAAAAJrOkxPSUAPUV4R2CvCO0AAAAAAAAAKbbH+X9MfWXAAAAAAAAAAAAAAAAAAAAPUV4R2gAAAAAH/9k=" alt="" class="profile-pic">
+    </div>
+    <br>
+    <div class="data">
+      <center><h4>Name: {{name}}</h4></center>
+      <center><h4>Email: {{email}}</h4></center>
+    </div>
+
+    <div class="buttons">
+      <a href="/stories" class="btn">Your Stories</a>
+      <a href="/edit" class="btn">Edit</a>
+      <a href="/home" class="btn">Back</a>
+    </div>
+  </div>
+</section>
+</body>
+</html>
+

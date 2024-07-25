@@ -7,6 +7,28 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+		<!-- sidebar -->
+	<div class="hamburger" onclick="toggleSidebar()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+  	<br>
+    <a href="/home">Stories</a>
+    <a href="/profile">Profile</a>
+    <a href="/signout">sign out</a>
+  </div>
+
+  <script>
+  	function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("active");
+  document.body.classList.toggle("active");
+}
+  </script>
+	<!-- sidebar -->
+
 	<br><br><br><br><br><br><br><br>
     <form method="POST" action="/home">
         <input type="text" name="author" placeholder="Your Name">
@@ -23,7 +45,7 @@
         </select>
         <input type="submit" value="Submit">
     </form>
-    <center><a href="/home"><button>Home</button></a><br></center>
+    <a href="/home"><button>Back</button></a>
 </body>
 
 </html>

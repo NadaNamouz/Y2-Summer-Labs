@@ -3,14 +3,26 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pro.css') }}">
 	<title>Main</title>
 </head>
 <body>
-	<center>
-		<br><br><br><br>
+	<section class="main">
+  <div class="profile-card">
+    <div class="image">
+      <img src="img.jpg">
+    </div>
+    <br>
+    <div class="data">
+     	<center>
+		<h3>Welcome to StoryBox</h3>
+		<br>
 		<a href="/signup"><button>Sign up</button></a>
 		<a href="/login"><button>Log in</button></a>
-	</center>
+		</center>
+
+    </div>
+  </div>
+</section>
 </body>
 </html>
